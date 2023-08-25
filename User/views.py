@@ -8,6 +8,7 @@ from django.core.validators import validate_email
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .serializers import *
+import json
 from User.models import Member
 
 from rest_framework.response import Response
@@ -57,11 +58,11 @@ def signup_view(request):
     print(request)
     if request.method == 'POST':
         print(request)
-        data = request.POST
+        data = json.loads(request.body)
         email = data.get('email')
         print(email)
         password = data.get('password')
-        username = data.get('nickname')
+        username = data.get('username')
         #school = data.get('school')
 
         try:

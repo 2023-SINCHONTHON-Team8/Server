@@ -48,7 +48,7 @@ class Member(AbstractUser):
     spicy = 1~5 """
 
 class Likes(models.Model):
-    member = models.OneToOneField(Member, on_delete=models.CASCADE)
+    member = models.OneToOneField(Member, on_delete=models.CASCADE, default=None)
     insta_vibes = models.BooleanField(default=False)  # 인스타감성
     local_legend = models.BooleanField(default=False)  # 이지역터줏대감
     trending_spot = models.BooleanField(default=False)  # 신상핫플
@@ -63,7 +63,42 @@ class Likes(models.Model):
     
     class Meta:
         verbose_name_plural = 'Likes'
-
+        
     def __str__(self):
-        return self.key
+        return str(self.member)
     
+def similarity(self, other_user):
+        mannerTemp_similarity = abs(self.mannerTemp - other_user.mannerTemp) / 100.0
+        spicy_similarity = abs(self.spicy - other_user.spicy) / 10.0
+        
+        like_fields=['insta_vibes','local_legend','trending_spot','secret_spot',
+                     'mara','hawaiian_pizza', 'cucumber', 'perilla_leaves', 'mint_choco']
+        
+        like_similarity=sum([int(getattr(self.like,f)==getattr(other_user.like,f)) for f in like_fields])/len(like_fields)
+        
+        return mannerTemp_similarity * 0.25 + spicy_similarity * 0.25 + like_similarity*0.5
+
+
+def get_similar_users(user,top_n=5):
+    users=Member.objects.exclude(id=user.id)
+    similarities=[(other_user,user.similarity(other_user)) for other_user in users]
+    similarities.sort(key=lambda x: x[1],reverse=True)
+
+    return [user for user,similarity in similarities[:top_n]]
+
+
+def recommend_posts(user):
+    from Post.models import Post
+
+    similar_users=get_similar_users(user)
+
+    recommended_posts=[]
+
+    for similar_user in similar_users:
+        posts_by_similar_user = Post.objects.filter(author=similar_user)
+
+    unseen_posts_by_similar_user=posts_by_similar_user.exclude(seen_by__id=user.id)
+
+    recommended_posts.extend(unseen_posts_by_similar_user)
+
+    return recommended_posts 
