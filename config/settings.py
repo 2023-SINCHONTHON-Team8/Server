@@ -129,11 +129,19 @@ SIMPLE_JWT = {
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# Database
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '8team',
+        'USER': 'admin',
+        'PASSWORD': 'test28team',
+        'HOST': 'database-1.cwuqsrpswgka.ap-northeast-2.rds.amazonaws.com',
+        'PORT': 3306,
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
     }
 }
 
