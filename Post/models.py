@@ -1,6 +1,8 @@
 from django.db import models
 
-from Server import Restaurant, User
+from Restaurant.models import *
+from User.models import *
+
 
 # Create your models here.
 
@@ -14,6 +16,10 @@ class GroupTraits(models.Model):
     local_legend = models.BooleanField(default=False)  # 이지역터줏대감
     trending_spot = models.BooleanField(default=False)  # 신상핫플
     secret_spot = models.BooleanField(default=False)  # 나만아는곳
+    # 추가적인 그룹 특성
+    mara = models.BooleanField(default=False)  # 마라
+    hawaiian_pizza = models.BooleanField(default=False)  # 하와이안피자
+    cucumber = models.BooleanField(default=False)  # 오이
     
     class Meta:
         verbose_name_plural = 'GroupTraits'

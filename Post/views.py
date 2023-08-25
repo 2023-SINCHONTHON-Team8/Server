@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Post, GroupTraits
 from .serializers import PostSerializer,GroupTraitsSerializer
+from rest_framework import status
 
 # Create your views here.
 @api_view(['POST'])
@@ -42,11 +43,16 @@ def join_post(request, post_id):
         post = get_object_or_404(Post, id=post_id)
         
         if user == post.user:
-            return Response({'message': 'You cannot join your own post'}, status=400)
+            return Response({'message': 'You cannot join your own post'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if post.number <= 0:
+            return Response({'message': 'This post is already full'}, status=status.HTTP_400_BAD_REQUEST)
         
         post.participants.add(user)
-        return Response({'message': 'Joined the post successfully'}, status=200)
-    
+        post.number -= 1
+        post.save()
+        
+        return Response({'message': 'Joined the post successfully'}, status=status.HTTP_200_OK)
 @api_view(['GET'])
 def get_all_posts(request):
     if request.method == 'GET':
