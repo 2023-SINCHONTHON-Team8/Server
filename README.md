@@ -6,11 +6,10 @@
 https://front-end-sable-rho.vercel.app/
 ---
 ## 팀원 소개
-김정민, 김가영, 이은비, 이한비, 김성현, 이혜지, 현종혁
-| 기획 | FE | FE | 
-| --- | --- | --- |
-| 김정민 | 김가영 | 이은비 |
-| | <img src="https://avatars.githubusercontent.com/u/126054466?v=4" width="100px" height="100px"><br/><a href="https://github.com/y0ung22">y0ung22</a> | <img src="https://avatars.githubusercontent.com/u/108103346?v=4" width="100px" height="100px"><br><a href="https://github.com/silverain02">silverain02</a> |
+| 백엔드 | 백엔드 | 백엔드 | 백엔드 | 
+| --- | --- | --- | --- |
+| 이한비 | 김성현 | 이혜지 | 현종혁 |
+| | <img src="https://avatars.githubusercontent.com/u/126054466?v=4" width="100px" height="100px"><br/><a href="https://github.com/y0ung22">y0ung22</a> | <img src="https://avatars.githubusercontent.com/u/108103346?v=4" width="100px" height="100px"><br><a href="https://github.com/silverain02">silverain02</a> | |
 
 ---
 ## 프로젝트 소개
