@@ -58,7 +58,10 @@ def signup_view(request):
         print(email)
         password = data.get('password')
         username = data.get('username')
+        confirm_password = data.get('confirm_password')  # 비밀번호 확인 필드 추가
         #school = data.get('school')
+        
+        
 
         try:
             #validate_email(email)  # 이메일 형식 검증
@@ -69,6 +72,10 @@ def signup_view(request):
           # 이미 존재하는 이메일인지 확인
         if Member.objects.filter(email=email).exists():
             return JsonResponse({'message': 'Email already exists'}, status=400)
+        
+                # 비밀번호 확인
+        if password != confirm_password:
+            return JsonResponse({'message': 'Passwords do not match'}, status=400)
 
 
          # 사용자 생성
