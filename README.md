@@ -9,7 +9,7 @@ https://front-end-sable-rho.vercel.app/
 | 기획 | FE | FE | BE | BE | BE | BE |
 | --- | --- | --- | --- | --- | --- | --- |
 | 김정민 | 김가영 | 이은비 | 이한비 | 김성현 | 이혜지 | 현종혁 |
-| | <img src="https://avatars.githubusercontent.com/u/126054466?v=4" width="100px" height="100px"><br/><a href="https://github.com/y0ung22">y0ung22</a> | <img src="https://avatars.githubusercontent.com/u/108103346?v=4" width="100px" height="100px"><br><a href="https://github.com/silverain02">silverain02</a> | <img src="https://avatars.githubusercontent.com/u/126054466?v=4" width="100px" height="100px"><br/><a href="https://github.com/AlmondBreez3">AlmondBreez3</a> | | | |
+| <img src="https://avatars.githubusercontent.com/u/127923560?v=4" width="100px" height="100px"><br/><a href="https://github.com/jmeverysingleday">jmeverysingleday</a> | <img src="https://avatars.githubusercontent.com/u/126054466?v=4" width="100px" height="100px"><br/><a href="https://github.com/y0ung22">y0ung22</a> | <img src="https://avatars.githubusercontent.com/u/108103346?v=4" width="100px" height="100px"><br><a href="https://github.com/silverain02">silverain02</a> | <img src="https://avatars.githubusercontent.com/u/126054466?v=4" width="100px" height="100px"><br/><a href="https://github.com/AlmondBreez3">AlmondBreez3</a> |<img src="https://avatars.githubusercontent.com/u/127824570?v=4" width="100px" height="100px"><br/><a href="https://github.com/sunghyun1356 ">sunghyun1356 </a> |<img src="https://avatars.githubusercontent.com/u/127820713?v=4" width="100px" height="100px"><br/><a href="https://github.com/ehyeji ">ehyeji </a> |<img src="https://avatars.githubusercontent.com/u/55123397?v=4" width="100px" height="100px"><br/><a href="https://github.com/0-lingual">0-lingual</a> |
 
 ---
 ## 프로젝트 소개
