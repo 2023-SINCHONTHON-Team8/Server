@@ -6,4 +6,5 @@ urlpatterns = [
     path('join/<int:post_id>/', join_post, name='join_post'),
     path('posts/', get_all_posts, name='get_all_posts'),
     path('posts/<int:post_id>/', get_post_detail, name='get_post_detail'),  
+    path('posts_recommand/',get_user_recommand_post.as_view(), name="posts_recommend" ),
 ]
