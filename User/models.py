@@ -48,6 +48,7 @@ class Member(AbstractUser):
     spicy = 1~5 """
 
 class Likes(models.Model):
+    member = models.OneToOneField(Member, on_delete=models.CASCADE)
     insta_vibes = models.BooleanField(default=False)  # 인스타감성
     local_legend = models.BooleanField(default=False)  # 이지역터줏대감
     trending_spot = models.BooleanField(default=False)  # 신상핫플
