@@ -3,7 +3,6 @@ from datetime import timezone
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 from Restaurant.models import Restaurant
 from .models import Post, GroupTraits, PostImage
 from .serializers import PostSerializer,GroupTraitsSerializer
@@ -11,6 +10,10 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework import generics
+from User.models import *
+from django.http import JsonResponse
+import json
 
 @api_view(['POST'])  # POST 메소드만 허용
 @permission_classes((IsAuthenticated, ))
@@ -78,12 +81,68 @@ def join_post(request, post_id):
         
         return Response({'message': 'Joined the post successfully'}, status=status.HTTP_200_OK)
 
+class get_user_recommand_post(generics.ListAPIView):
+    queryset = Post.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = PostSerializer
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request):
+        result =self.similarity(request)
+        sorted_restaurants = sorted(result["restaurant"], key=lambda x: x["similarity"], reverse=True)
+        sorted_result = {"restaurant": sorted_restaurants}
+        id_list = [entry["id"] for entry in sorted_result["restaurant"]]
+        print(id_list)
+        posts_all_listing =[]
+        for post_recommend in id_list:
+            user = Member.objects.get(id = post_recommend)
+            
+            
+            posts= Post.objects.filter(user__id = post_recommend)
+            posts_listing ={}
+           #posts_listing["key"] = posts.key
+            posts_listing["post_name"] = posts.values('post_name')
+            posts_listing["image"] = request.build_absolute_uri(posts.values('images'))
+            posts_listing['restaurant'] = posts.values('restaurant_id')
+            posts_listing['user'] = posts.values('user')
+            posts_listing["group_traits"] = posts.values('group_traits_id')
+            posts_listing['participants'] = posts.values('participants')
+            posts_all_listing.append(posts_listing)
+
+        return Response(posts_all_listing)
+    
+    def similarity(self, request):
+        user = request.user
+        user_id = user.id
+        others_user = Member.objects.all().exclude(id=user_id)
+        user_likes = Likes.objects.get(member=user)
+        similarity_list = []
+
+        for others in others_user:
+            mannerTemp_similarity = abs(user.mannerTemp - others.mannerTemp)
+            spicy_similarity = abs(user.spicy - others.spicy) / 10.0
+            others_likes = Likes.objects.get(member=others)
+            like_fields = ['insta_vibes', 'local_legend', 'trending_spot', 'secret_spot',
+                        'mara', 'hawaiian_pizza', 'cucumber', 'perilla_leaves', 'mint_choco']
+            like_similarity = sum([int(getattr(user_likes, f) == getattr(others_likes, f)) for f in like_fields]) / len(like_fields)
+
+            restaurant_similarity = {
+                "similarity": mannerTemp_similarity * 0.25 + spicy_similarity * 0.25 + like_similarity * 0.5,
+                "id": others.id
+            }
+            similarity_list.append(restaurant_similarity)
+
+        return {"restaurant": similarity_list}
+
+
+
+
 @api_view(['GET'])
 def get_all_posts(request):
     if request.method == 'GET':
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data, status=200)
+            posts = Post.objects.all()
+            serializer = PostSerializer(posts, many=True)
+            return Response(serializer.data, status=200)
 
 
 @api_view(['GET'])
@@ -91,3 +150,56 @@ def get_post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     serializer = PostSerializer(post)
     return Response(serializer.data, status=200)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])  # 인증 필요
+def increase_manner_temp(request):
+    user = request.user  # 현재 로그인한 사용자
+    data = request.data
+    
+    feedback = data.get('feedback', '')  # 클라이언트로부터 전달된 feedback 값
+    
+    if feedback == '별로였어요':
+        user.manner_temp += 0
+    elif feedback == '괜찮았어요':
+        user.manner_temp += 1
+    elif feedback == '좋았어요':
+        user.manner_temp += 3
+    
+    user.save()
+    
+    total_manner_temp = user.manner_temp
+    
+    level = "초보"
+    if total_manner_temp >= 50:
+        level = "평균"
+    if total_manner_temp >= 100:
+        level = "우수"
+    
+    return Response({'message': 'Manner 온도가 증가되었습니다.', 'total_manner_temp': total_manner_temp, 'level': level})
+
+def similarity(self, request, user):
+    others_user = Member.objects.all().exclude(user)
+    user_likes = Likes.objects.get(member=user)
+    similarity =[]
+    for others in others_user:
+        mannerTemp_similarity = abs(user.mannerTemp -others.mannerTemp)
+        spicy_similarity = abs(user.spicy- others.spicy) / 10.0
+        others_likes = Likes.objects.get(member=others)
+        like_fields=['insta_vibes','local_legend','trending_spot','secret_spot',
+                     'mara','hawaiian_pizza', 'cucumber', 'perilla_leaves', 'mint_choco']
+        like_similarity = sum([int(getattr(user_likes,f)==getattr(others_likes,f))for f in like_fields])/len(like_fields)
+        similarity.append (mannerTemp_similarity * 0.25 + spicy_similarity * 0.25 + like_similarity*0.5)
+    print(similarity)
+        
+
+        
+        
+
+
+
+
+
+
+
+        
