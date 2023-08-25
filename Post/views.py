@@ -91,3 +91,30 @@ def get_post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     serializer = PostSerializer(post)
     return Response(serializer.data, status=200)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])  # 인증 필요
+def increase_manner_temp(request):
+    user = request.user  # 현재 로그인한 사용자
+    data = request.data
+    
+    feedback = data.get('feedback', '')  # 클라이언트로부터 전달된 feedback 값
+    
+    if feedback == '별로였어요':
+        user.manner_temp += 0
+    elif feedback == '괜찮았어요':
+        user.manner_temp += 1
+    elif feedback == '좋았어요':
+        user.manner_temp += 3
+    
+    user.save()
+    
+    total_manner_temp = user.manner_temp
+    
+    level = "초보"
+    if total_manner_temp >= 50:
+        level = "평균"
+    if total_manner_temp >= 100:
+        level = "우수"
+    
+    return Response({'message': 'Manner 온도가 증가되었습니다.', 'total_manner_temp': total_manner_temp, 'level': level})

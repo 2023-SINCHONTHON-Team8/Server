@@ -33,6 +33,7 @@ class Member(AbstractUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     spicy = models.IntegerField(default=1)
+    manner_temp=models.IntegerField(default=0)
     
      # 헬퍼 클래스 사용
     objects = UserManager()
