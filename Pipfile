@@ -7,6 +7,10 @@ name = "pypi"
 django = "*"
 python-dotenv = "*"
 djangorestframework = "*"
+pandas = "*"
+numpy = "*"
+scikit-learn = "*"
+django-enum-choices = "*"
 
 [dev-packages]
 
