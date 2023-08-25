@@ -14,7 +14,8 @@ from User.models import Member
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import views
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 '''
 # Create your views here.
 class RegistrationAPIView(APIView):
@@ -104,6 +105,15 @@ def signup_view(request):
         return JsonResponse({'message': 'Invalid request method'}, status=400)
     
 
+class LoginView(views.APIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            return Response({'message': "로그인 성공", 'data': serializer.validated_data}, status=status.HTTP_200_OK)
+        return Response({'message': "로그인 실패", 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LikesAPIView(views.APIView):
     serializer_class = LikesSerializer
@@ -114,7 +124,13 @@ class LikesAPIView(views.APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = LikesSerializer(data=request.data)
+        data = request.data
+        print(data)
+        member = request.user
+        
+        # LikesSerializer에 member 정보 추가하여 직렬화
+        serializer = LikesSerializer(data={**data, 'member': member.id})
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

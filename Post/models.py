@@ -26,7 +26,7 @@ class GroupTraits(models.Model):
 
 class Post(models.Model):
     key = models.AutoField(primary_key=True) 
-    post_name=models.CharField(max_length=255)
+    post_name=models.CharField(max_length=255,default=None)
     createdAt=models.TimeField
     number=models.IntegerField
     comment=models.TextField
