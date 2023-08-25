@@ -16,10 +16,7 @@ class GroupTraits(models.Model):
     local_legend = models.BooleanField(default=False)  # 이지역터줏대감
     trending_spot = models.BooleanField(default=False)  # 신상핫플
     secret_spot = models.BooleanField(default=False)  # 나만아는곳
-    # 추가적인 그룹 특성
-    mara = models.BooleanField(default=False)  # 마라
-    hawaiian_pizza = models.BooleanField(default=False)  # 하와이안피자
-    cucumber = models.BooleanField(default=False)  # 오이
+
     
     class Meta:
         verbose_name_plural = 'GroupTraits'
@@ -35,11 +32,12 @@ class Post(models.Model):
     link=models.URLField
     isManager= models.BooleanField
     restaurant= models.OneToOneField(Restaurant,on_delete=models.CASCADE,) #restaurant랑 매핑하면 menu도 자동으로 매핑되는데 합치고 나서 봐야할듯
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    user=models.ForeignKey(Member, on_delete=models.CASCADE)
     group_traits = models.OneToOneField(GroupTraits, on_delete=models.CASCADE, related_name='post')
     images = models.ImageField(upload_to='post_images/', blank=True, null=True, verbose_name='Images')
     
-    
+    # ManyToMany 필드로서 참여한 사용자들을 나타냅니다.
+    participants = models.ManyToManyField(Member, related_name='joined_posts', blank=True)
     class Meta:
         verbose_name_plural = 'Post'
 
@@ -48,3 +46,9 @@ class Post(models.Model):
     
 
     
+class PostImage(models.Model):
+    post = models.ForeignKey(Post, related_name='post_images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='post_images/')
+
+    def __str__(self):
+        return f"Image for Post {self.post.key}"
