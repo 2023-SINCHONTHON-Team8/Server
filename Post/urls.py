@@ -5,6 +5,6 @@ urlpatterns = [
     path('create_post/', create_post, name='create_post'),
     path('join/<int:post_id>/', join_post, name='join_post'),
     path('posts/', get_all_posts, name='get_all_posts'),
-    path('posts/<int:post_id>/', get_post_detail, name='get_post_detail'),  
-    path('posts_recommand/',get_user_recommand_post.as_view(), name="posts_recommend" ),
+    path('posts/<int:post_id>/', get_post_detail, name='get_post_detail'),
+    path('increase_manner_temp/', increase_manner_temp, name='increase_manner_temp'),
 ]

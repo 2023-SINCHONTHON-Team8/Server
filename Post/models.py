@@ -26,7 +26,7 @@ class GroupTraits(models.Model):
 
 class Post(models.Model):
     key = models.AutoField(primary_key=True) 
-    post_name=models.CharField(max_length=255)
+    post_name=models.CharField(max_length=255,default=None)
     createdAt=models.TimeField
     number=models.IntegerField
     comment=models.TextField
@@ -34,7 +34,7 @@ class Post(models.Model):
     isManager= models.BooleanField
     restaurant= models.OneToOneField(Restaurant,on_delete=models.CASCADE,) #restaurant랑 매핑하면 menu도 자동으로 매핑되는데 합치고 나서 봐야할듯
     user=models.ForeignKey(Member, on_delete=models.CASCADE)
-    group_traits = models.OneToOneField(GroupTraits, on_delete=models.CASCADE, related_name='post')
+    group_traits = models.ForeignKey(GroupTraits, on_delete=models.CASCADE)
     images = models.ImageField(upload_to='post_images/', blank=True, null=True, verbose_name='Images')
     
     # ManyToMany 필드로서 참여한 사용자들을 나타냅니다.
