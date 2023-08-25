@@ -9,4 +9,5 @@ admin.site.register(Member)
 admin.site.register(Restaurant)
 admin.site.register(Post)
 admin.site.register(GroupTraits)
+admin.site.register(Likes)
 

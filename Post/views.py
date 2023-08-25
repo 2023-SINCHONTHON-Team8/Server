@@ -11,6 +11,9 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework import generics
+from User.models import *
+
 
 @api_view(['POST'])  # POST 메소드만 허용
 @permission_classes((IsAuthenticated, ))
@@ -118,3 +121,38 @@ def increase_manner_temp(request):
         level = "우수"
     
     return Response({'message': 'Manner 온도가 증가되었습니다.', 'total_manner_temp': total_manner_temp, 'level': level})
+
+def similarity(self, request, user):
+    others_user = Member.objects.all().exclude(user)
+    user_likes = Likes.objects.get(member=user)
+    similarity =[]
+    for others in others_user:
+        mannerTemp_similarity = abs(user.mannerTemp -others.mannerTemp)
+        spicy_similarity = abs(user.spicy- others.spicy) / 10.0
+        others_likes = Likes.objects.get(member=others)
+        like_fields=['insta_vibes','local_legend','trending_spot','secret_spot',
+                     'mara','hawaiian_pizza', 'cucumber', 'perilla_leaves', 'mint_choco']
+        like_similarity = sum([int(getattr(user_likes,f)==getattr(others_likes,f))for f in like_fields])/len(like_fields)
+        similarity.append (mannerTemp_similarity * 0.25 + spicy_similarity * 0.25 + like_similarity*0.5)
+    print(similarity)
+        
+
+        
+        
+
+
+
+class get_user_recommand_post(generics.ListAPIView):
+    def get(self, request):
+        user = request.user
+        similarity(user)
+        
+
+
+
+
+    def get(request):
+            user = request.user
+
+
+        
