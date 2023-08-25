@@ -44,10 +44,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # 내 애플리케이션
-    "User.apps.UserConfig",
-    "Post.apps.PostConfig",
-    "Restaurant.apps.RestaurantConfig",
-    "rest_framework",
+    'User.apps.UserConfig',
+    'Post.apps.PostConfig',
+    'Restaurant.apps.RestaurantConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
