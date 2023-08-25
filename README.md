@@ -39,3 +39,7 @@ https://front-end-sable-rho.vercel.app/
 ---
 ## 화면 구성
 https://www.figma.com/file/oK2LA3rYkMS8c9M9O1rxXc/2023-%EC%8B%A0%EC%B4%8C%ED%86%A4-8%EC%A1%B0?type=design&node-id=9-6&mode=design&t=QMVFvmBYLa8AhQRl-0
+![10](https://github.com/2023-SINCHONTHON-Team8/Server/assets/108103346/367f8e57-9c01-4991-84ec-bfbe69355dbd)
+![11](https://github.com/2023-SINCHONTHON-Team8/Server/assets/108103346/99c00214-89d4-44a8-885e-2e3ff97a72fb)
+![12](https://github.com/2023-SINCHONTHON-Team8/Server/assets/108103346/54562414-544b-4ab6-8ffd-26db7304771e)
+
