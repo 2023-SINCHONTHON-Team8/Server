@@ -12,6 +12,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 
+@api_view(['POST'])  # POST 메소드만 허용
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication])
 @api_view(['POST'])
 def create_post(request):
     if request.method == 'POST':
@@ -55,6 +58,8 @@ def create_post(request):
         return Response(post_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+@authentication_classes([JWTAuthentication])
 def join_post(request, post_id):
     if request.method == 'POST':
         user = request.user  # 현재 로그인한 사용자
@@ -80,8 +85,7 @@ def get_all_posts(request):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data, status=200)
 
-@permission_classes((IsAuthenticated, ))
-@authentication_classes([JWTAuthentication])  
+
 @api_view(['GET'])
 def get_post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
