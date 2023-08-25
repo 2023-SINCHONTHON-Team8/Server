@@ -34,7 +34,7 @@ class Member(AbstractUser):
     is_staff = models.BooleanField(default=False)
     spicy = models.IntegerField(default=1)
     
-     # 헬퍼 클래스 사용
+    # 헬퍼 클래스 사용
     objects = UserManager()
 
     # 사용자의 username field는 email으로 설정 (이메일로 로그인)

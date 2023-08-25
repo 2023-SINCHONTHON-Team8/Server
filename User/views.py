@@ -3,13 +3,17 @@ from django.forms import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
 from django.core.validators import validate_email
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-
+from .serializers import *
 from User.models import Member
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import views
+
 '''
 # Create your views here.
 class RegistrationAPIView(APIView):
@@ -66,16 +70,16 @@ def signup_view(request):
         except ValidationError as e:
             return JsonResponse({'message': str(e)}, status=400)
         
-          # 이미 존재하는 이메일인지 확인
+        # 이미 존재하는 이메일인지 확인
         if Member.objects.filter(email=email).exists():
             return JsonResponse({'message': 'Email already exists'}, status=400)
 
 
-         # 사용자 생성
+        # 사용자 생성
         user = Member.objects.create_user(email=email, password=password,username=username)
         
         
-       # jwt 토큰 접근
+        # jwt 토큰 접근
         token = TokenObtainPairSerializer.get_token(user)
         refresh_token = str(token)
         access_token = str(token.access_token)
@@ -97,4 +101,21 @@ def signup_view(request):
         return response
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+
+
+class LikesAPIView(views.APIView):
+    serializer_class = LikesSerializer
+
+    def get(self, request):
+        likes = Likes.objects.all()
+        serializer = LikesSerializer(likes, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = LikesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
