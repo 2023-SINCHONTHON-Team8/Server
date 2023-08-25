@@ -43,3 +43,9 @@ https://www.figma.com/file/oK2LA3rYkMS8c9M9O1rxXc/2023-%EC%8B%A0%EC%B4%8C%ED%86%
 ![11](https://github.com/2023-SINCHONTHON-Team8/Server/assets/108103346/99c00214-89d4-44a8-885e-2e3ff97a72fb)
 ![12](https://github.com/2023-SINCHONTHON-Team8/Server/assets/108103346/54562414-544b-4ab6-8ffd-26db7304771e)
 
+## 백엔드 설계
+### ERDCloud
+![image](https://github.com/2023-SINCHONTHON-Team8/Front-end/assets/122217424/0ace4242-40ec-4686-808f-31dabfa5ac29)
+
+
+### API 명세서
