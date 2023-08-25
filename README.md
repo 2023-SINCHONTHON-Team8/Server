@@ -3,7 +3,7 @@
 ![image](https://github.com/2023-SINCHONTHON-Team8/Server/assets/122217424/017d8e66-3515-4bc1-a8eb-da51ef0ba74e)
 ---
 ## 배포 주소
-https://example.com
+[https://example.com](https://front-end-sable-rho.vercel.app/)
 ---
 ## 팀원 소개
 김정민, 김가영, 이은비, 이한비, 김성현, 이혜지, 현종혁
